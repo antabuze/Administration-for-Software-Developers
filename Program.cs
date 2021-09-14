@@ -11,6 +11,7 @@ namespace Administration_for_Software_Developers
         static void Main(string[] args)
         {
             int? userInput = 0;
+            List<Programmer> programmers = new List<Programmer>();
             var title = new[] {
                 @"  ___      _           _       _     _             _   _               ",
                 @" / _ \    | |         (_)     (_)   | |           | | (_)              ",
@@ -41,9 +42,9 @@ namespace Administration_for_Software_Developers
                     Console.WriteLine(line);
                 }
 
-                Console.WriteLine("\n   Choose an option (1-5): \n");
-                Console.WriteLine("     1. Number One");
-                Console.WriteLine("     2. Number Two");
+                Console.WriteLine("\n     Choose an option (1-5): \n");
+                Console.WriteLine("     1. Create new employee");
+                Console.WriteLine("     2. List all employees");
                 Console.WriteLine("     3. Number Three");
                 Console.WriteLine("     4. Number Four");
                 Console.WriteLine("     5. Number Five");
@@ -51,7 +52,7 @@ namespace Administration_for_Software_Developers
 
                 try
                 {   // PURELY VISUAL: Moves the text cursor to a new position
-                    Console.SetCursorPosition(27, 18);           
+                    Console.SetCursorPosition(29, 18);           
                     userInput = int.Parse(Console.ReadLine());
                 }
                 catch
@@ -66,14 +67,39 @@ namespace Administration_for_Software_Developers
                 {
                     case 1:
                         Console.Clear();
-                        Console.WriteLine("Alternative 1!");
-                        System.Threading.Thread.Sleep(2000);
+                        Console.WriteLine("Enter full name of the employee:");
+                        string name = Console.ReadLine();
+                        Console.WriteLine("Enter the payroll number of the employee:");
+                        string payrollNumber = Console.ReadLine();
+                        
+                        // Array for language skills. Each index represents a language according to: Java/C#/Python. e.g 0/1/0 = skills in C# but not in Java or Python.
+                        bool[] languageSkills = new bool[3];
+                        Console.WriteLine("Does the employee got skills with Java? (Y/N)");
+                        if(Console.ReadLine() == "Y") { languageSkills[0] = true; }
+                        else { languageSkills[0] = false; }
+                        
+                        Console.WriteLine("Does the employee got skills with C#? (Y/N)");
+                        if (Console.ReadLine() == "Y") { languageSkills[1] = true; }
+                        else { languageSkills[1] = false; }
+                        
+                        Console.WriteLine("Does the employee got skills with Python? (Y/N)");
+                        if (Console.ReadLine() == "Y") { languageSkills[2] = true; }
+                        else { languageSkills[2] = false; }
+
+                        programmers.Add(new Programmer(name, payrollNumber, "30000", languageSkills));
                         break;
                   
                     case 2:
                         Console.Clear();
-                        Console.WriteLine("Alternative 2!");
-                        System.Threading.Thread.Sleep(2000);
+                        Console.WriteLine("Employees:");
+                        foreach (Programmer programmer in programmers)
+                        {
+                            Console.WriteLine("Name: " + programmer.Name);
+                            Console.WriteLine("Payroll Number: " + programmer.PayrollNumber);
+                            Console.WriteLine("Salary: " + programmer.Salary);
+                            Console.WriteLine("Language skills (Java/C#/Python): " + programmer.languageSkills[0] + "/" + programmer.languageSkills[1] + "/" + programmer.languageSkills[2]);
+                        }
+                        Console.ReadKey();
                         break;
 
                     case 3:
@@ -101,5 +127,10 @@ namespace Administration_for_Software_Developers
                 }
             } while (userInput != 6);
         }
+
+        public void CreateNewEmployee(string name, string payrollNumber, string salary, bool[] languageSkills)
+        {
+            Programmer Test = new Programmer(name, payrollNumber, salary, languageSkills);
         }
     }
+}
