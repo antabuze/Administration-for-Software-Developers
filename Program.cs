@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using DLL;
 
 namespace Administration_for_Software_Developers
 {
@@ -14,10 +15,19 @@ namespace Administration_for_Software_Developers
     {
         static void Main(string[] args)
         {
+            // Instance to access methods from DLL.
+            Class1 dll = new Class1();
             
+            // Userinput in menu.
             int? userInput = 0;
+            
+            // Collection for programmer objects.
             List<Programmer> programmers = new List<Programmer>();
             
+            // Imports employee information from XML.
+            programmers = dll.ImportXML();
+
+            // String array for title graphic
             var title = new[] {
                 @"  ___      _           _       _     _             _   _               ",
                 @" / _ \    | |         (_)     (_)   | |           | | (_)              ",
@@ -35,14 +45,16 @@ namespace Administration_for_Software_Developers
                 @"          \____/ \___/|_|  \__| \_/\_/ \__,_|_|  \___|                 ",
                 @"                                 By: Måns Andersson  "
                  };
-
+            
+            // Menu system.
             do
-            {   // Menu system
+            {   
                 Console.Clear();
                 Console.WindowWidth = 70;
                 Console.WriteLine("\n");
                 
-                // Draws the title graphic
+                
+                // Draws the title graphic.
                 foreach (string line in title)
                 {
                     Console.WriteLine(line);
@@ -57,7 +69,7 @@ namespace Administration_for_Software_Developers
                 Console.WriteLine("     6. Exit");
                 
                 try
-                {   // PURELY VISUAL: Moves the text cursor to a new position
+                {   // PURELY VISUAL: Moves the text cursor to a new position.
                     Console.SetCursorPosition(29, 18);           
                     userInput = int.Parse(Console.ReadLine());
                 }
@@ -68,9 +80,10 @@ namespace Administration_for_Software_Developers
                     System.Threading.Thread.Sleep(500);
                     userInput = null;
                 }
-
+                
                 switch (userInput)
                 {
+                    // Menu Option 1: Create new Employee
                     case 1:
                         Console.Clear();
                         Console.WriteLine("Enter full name of the employee:");
@@ -80,21 +93,27 @@ namespace Administration_for_Software_Developers
                         
                         // Array for language skills. Each index represents a language according to: Java/C#/Python. e.g 0/1/0 = skills in C# but not in Java or Python.
                         bool[] languageSkills = new bool[3];
+
                         Console.WriteLine("Does the employee got skills with Java? (Y/N)");
-                        if(Console.ReadLine() == "Y" || Console.ReadLine() == "y") { languageSkills[0] = true; }
+                        if(Console.ReadKey().Key == ConsoleKey.Y) { languageSkills[0] = true; }
                         else { languageSkills[0] = false; }
+                        Console.WriteLine();
                         
                         Console.WriteLine("Does the employee got skills with C#? (Y/N)");
-                        if (Console.ReadLine() == "Y" || Console.ReadLine() == "y") { languageSkills[1] = true; }
+                        if (Console.ReadKey().Key == ConsoleKey.Y) { languageSkills[1] = true; }
                         else { languageSkills[1] = false; }
+                        Console.WriteLine();
                         
                         Console.WriteLine("Does the employee got skills with Python? (Y/N)");
-                        if (Console.ReadLine() == "Y" || Console.ReadLine() == "y") { languageSkills[2] = true; }
+                        if (Console.ReadKey().Key == ConsoleKey.Y) { languageSkills[2] = true; }
                         else { languageSkills[2] = false; }
 
+                        // Creates a new programmer object, adds it to the list of programmers and saves the list to a XML File.
                         programmers.Add(new Programmer(name, payrollNumber, "30000", languageSkills));
+                        dll.ExportXML(programmers);
                         break;
-                  
+                    
+                    // Menu Option 2: List all employee
                     case 2:
                         Console.Clear();
                         Console.WriteLine("Employees:");
@@ -107,50 +126,31 @@ namespace Administration_for_Software_Developers
                         }
                         Console.ReadKey();
                         break;
-
+                    
+                    // Menu Option 3: 
                     case 3:
                         Console.Clear();
-                        ExportXML(programmers);
-                        System.Threading.Thread.Sleep(2000);
                         break;
-
+                 
+                    // Menu Option 4:
                     case 4:
                         Console.Clear();
-                        programmers = ImportXML();
-                        System.Threading.Thread.Sleep(2000);
                         break;
 
+                    // Menu Option 5:
                     case 5:
                         Console.Clear();
                         Console.WriteLine("Alternative 5!");
                         System.Threading.Thread.Sleep(2000);
                         break;
                     
+                    // Menu Option 6:
                     case 6:
                         Console.Clear();
                         break;
 
                 }
             } while (userInput != 6);
-        
-
-            List<Programmer> ImportXML()
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(List<Programmer>));
-                FileStream stream = File.OpenRead("Employees.xml");
-                List<Programmer> list = (List<Programmer>)serializer.Deserialize(stream);
-                return list;
-            }
-
-            void ExportXML(List<Programmer> list)
-            {
-                string xmlFilename = "Employees.xml";
-                var serializer = new XmlSerializer(typeof(List<Programmer>));
-
-                var file = new StreamWriter(xmlFilename);
-                serializer.Serialize(file, list);
-                file.Close();
-            }
         }
     }
 }
