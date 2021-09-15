@@ -1,4 +1,18 @@
-﻿using System;
+﻿
+
+/* This application works in a way that you create employees who you then can keep as ordinary programmers,
+ * or convert to either mentors or mentees. 
+ * 
+ * To create persistance between executions of the applications the records of the different types of employees are saved in XML files that the application reads from on execution.
+ *  
+ * Polymorphism has been used on all the different classes since the XML serializer needs parameterless constructors and the creation of objects needs a different constructor.
+ * 
+ * I chosed to use Generic Lists as my choice for a collections as they seemed to be the best choice for storing objects as i've done. However in retrospect i think
+ * that i could have benefited more from using Dictionaries as i could have used their unique key value to keep things more organized, but i dont have time to 
+ * replace the lists right now.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,8 +27,19 @@ namespace Administration_for_Software_Developers
 {
     class Program
     {
+
+        // Delegate for welcome message :)
+        public delegate string Delegate(string name);
+
+        public static string Welcome(string name)
+        {
+            return "Welcome, " + name + " hope you have a good day!";
+        }
         static void Main(string[] args)
         {
+            Delegate obj = new Delegate(Welcome);
+            string welcomeMessage = obj("user");
+            
             // Instance to access methods from DLL.
             Class1 dll = new Class1();
             
@@ -46,14 +71,14 @@ namespace Administration_for_Software_Developers
                 @"          \____/ \___/|_|  \__| \_/\_/ \__,_|_|  \___|                 ",
                 @"                                 By: Måns Andersson  "
                  };
-            
+           
             // Menu system.
             do
             {   
                 Console.Clear();
                 Console.WindowWidth = 70;
                 Console.WriteLine("\n");
-
+                Console.WriteLine(welcomeMessage);
                 // Syncs the salaries between the lists.
                 SyncSalary();
                 
@@ -215,6 +240,24 @@ namespace Administration_for_Software_Developers
                     // Menu Option 6: End menteeship for a mentee.
                     case 6:
                         Console.Clear();
+                        Console.WriteLine("Enter the payroll number for the mentee: ");
+                        input = Console.ReadLine();
+                        try
+                        {
+                            foreach (Mentee mentee in mentees)
+                            {
+                                if (mentee.PayrollNumber == input)
+                                {
+                                    mentee.mentor.RemoveMentee(input);
+                                    mentees.Remove(mentee);
+                                    dll.ExportXML_Mentee(mentees);
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            break;
+                        }
                         break;
 
                     // Menu Option 7:
@@ -223,8 +266,9 @@ namespace Administration_for_Software_Developers
                         break;
 
                 }
-            } while (userInput != 6);
-
+            } while (userInput != 7);
+            
+            // Updates the salary in the programmers list.
             void SyncSalary()
             {
                 foreach (Programmer programmer in programmers)
@@ -233,27 +277,24 @@ namespace Administration_for_Software_Developers
                     {
                         if (mentor.Salary != programmer.Salary && mentor.PayrollNumber == programmer.PayrollNumber)
                         {
-                            // Updates the salary in the programmers list.
+                            
                             programmer.Salary = mentor.Salary;
                         }
                     }
-                }
-                
-                
-                
-               
+                }  
             }
         }
     }
+
+    
 }
 
 // (x)Klasser med olika egenskaper 
 // (x)Konstruktorer för dessa klasser
 // (x)Metoder för dessa klasser
 // (x)Arv mellan minst 2 klasser
-// ()Statisk klass med metod som accepterar parametrar
 // (x)Polymorphism
-// ()Använd en delegate
+// (x)Använd en delegate
 
 // (x)Skapa en.DLL
 // (x)Exception - handlers
