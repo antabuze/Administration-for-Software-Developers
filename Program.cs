@@ -90,7 +90,7 @@ namespace Administration_for_Software_Developers
                         string name = Console.ReadLine();
                         Console.WriteLine("Enter the payroll number of the employee:");
                         string payrollNumber = Console.ReadLine();
-                        
+                        int baseSalary = 30000;
                         // Array for language skills. Each index represents a language according to: Java/C#/Python. e.g 0/1/0 = skills in C# but not in Java or Python.
                         bool[] languageSkills = new bool[3];
 
@@ -100,7 +100,7 @@ namespace Administration_for_Software_Developers
                         Console.WriteLine();
                         
                         Console.WriteLine("Does the employee got skills with C#? (Y/N)");
-                        if (Console.ReadKey().Key == ConsoleKey.Y) { languageSkills[1] = true; }
+                        if (Console.ReadKey().Key == ConsoleKey.Y) { languageSkills[1] = true; baseSalary = (int)Math.Ceiling(baseSalary*1.1); }
                         else { languageSkills[1] = false; }
                         Console.WriteLine();
                         
@@ -109,7 +109,7 @@ namespace Administration_for_Software_Developers
                         else { languageSkills[2] = false; }
 
                         // Creates a new programmer object, adds it to the list of programmers and saves the list to a XML File.
-                        programmers.Add(new Programmer(name, payrollNumber, "30000", languageSkills));
+                        programmers.Add(new Programmer(name, payrollNumber, baseSalary.ToString(), languageSkills));
                         dll.ExportXML(programmers);
                         break;
                     
