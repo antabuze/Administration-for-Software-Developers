@@ -1,12 +1,12 @@
-Klasser med olika egenskaper
-Konstruktorer för dessa klasser
-Metoder för dessa klasser
-Arv mellan minst 2 klasser
-Statisk klass med metod som accepterar parametrar
-Polymorphism
-Använd en delegate
+(x)Klasser med olika egenskaper 
+(x)Konstruktorer för dessa klasser
+(x)Metoder för dessa klasser
+(x)Arv mellan minst 2 klasser
+()Statisk klass med metod som accepterar parametrar
+()Polymorphism
+()Använd en delegate
 
-Skapa en .DLL
-Exception-handlers
+(x)Skapa en .DLL
+()Exception-handlers
 
-Datastrukturer (Collections)
+(x)Datastrukturer (Collections)
