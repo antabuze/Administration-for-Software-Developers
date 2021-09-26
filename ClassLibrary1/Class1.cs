@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Administration_for_Software_Developers
+namespace Dynamic Link Library
 {
-    class Mentee : Programmer
+    public class Class1
     {
-        private Mentor mentor { get; set; }
     }
 }
