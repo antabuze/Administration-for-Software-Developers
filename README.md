@@ -2,6 +2,8 @@
 Assignment 1 for ARP400
 
 Assignment instructions:
+
+
       You are required to develop software that supports the administration of a software company which employs programmers each of whom has an expertise in a  particular programming language, e.g. C#, C++ or Java.
       All programmers are paid a basic monthly salary of around 30000 kr per month. However, it may vary from programmer to programmer.
 
