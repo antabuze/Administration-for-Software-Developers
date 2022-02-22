@@ -30,6 +30,19 @@ Assignment instructions:
           The specialist programming language and current monthly salary together with details of any programmers that he is mentoring or is mentored by
 
       The report should show also a total monthly salary bill for the company 
+      
+       Requirements:
+       * Create classes with associated properties .
+       * Create appropriate constructors for the defined classes.
+       * Create appropriate methods for each of defined classes.
+       * Create inheritance between your classes(minimum2) , and create other types of relations when it is necessacry
+       * Choose the appropriate data structure (Collections), write as a comment why you use this type?
+       * Create a static class with a method that accepts parameters. Use the method in your program (you decide where and how)
+       * Override your methods when it is necessary through polymorphism (you decide which and how).
+       * Use a delegate to point to one or more of the methods.
+       * Create a dynamic link library (DLL) and use it in your Project.
+       * Add exception-handlers to chosen parts of your code (you decide which parts).
+
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
